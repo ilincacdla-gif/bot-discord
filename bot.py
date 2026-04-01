@@ -15,14 +15,6 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     print(f"Connecté en tant que {bot.user}")
-
-    try:
-        channel = await bot.fetch_channel(CHANNEL_ID)
-        await channel.send("Test OK 🚀")
-        print("Message de test envoyé")
-    except Exception as e:
-        print(f"Erreur test envoi message : {e}")
-
     if not rappel.is_running():
         rappel.start()
 
