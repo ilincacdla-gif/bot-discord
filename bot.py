@@ -16,10 +16,12 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"Connecté en tant que {bot.user}")
 
-    # 🔥 TEST DIRECT AU DÉMARRAGE
-    channel = bot.get_channel(CHANNEL_ID)
-    if channel:
+    try:
+        channel = await bot.fetch_channel(CHANNEL_ID)
         await channel.send("Test OK 🚀")
+        print("Message de test envoyé")
+    except Exception as e:
+        print(f"Erreur test envoi message : {e}")
 
     if not rappel.is_running():
         rappel.start()
@@ -28,9 +30,10 @@ async def on_ready():
 async def rappel():
     aujourd_hui = datetime.now(ZoneInfo("Europe/Zurich")).weekday()
 
-    channel = bot.get_channel(CHANNEL_ID)
-    if channel is None:
-        print("Salon introuvable")
+    try:
+        channel = await bot.fetch_channel(CHANNEL_ID)
+    except Exception as e:
+        print(f"Salon introuvable ou inaccessible : {e}")
         return
 
     if aujourd_hui == 0:
