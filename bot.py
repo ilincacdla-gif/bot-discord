@@ -15,6 +15,12 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     print(f"Connecté en tant que {bot.user}")
+
+    # 🔥 TEST DIRECT AU DÉMARRAGE
+    channel = bot.get_channel(CHANNEL_ID)
+    if channel:
+        await channel.send("Test OK 🚀")
+
     if not rappel.is_running():
         rappel.start()
 
